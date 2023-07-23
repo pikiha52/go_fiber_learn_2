@@ -1,10 +1,11 @@
 package main
 
 import (
+	"github.com/gofiber/fiber/v2"
+
 	"learn_go/database"
 	"learn_go/router"
 
-	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
@@ -13,6 +14,10 @@ func main() {
 	database.ConnectDB()
 
 	router.SetupRoutes(app)
+
+	app.Use(func (c *fiber.Ctx) error {
+		return c.SendStatus(404)
+	})
 
 	app.Listen(":3000")
 }
