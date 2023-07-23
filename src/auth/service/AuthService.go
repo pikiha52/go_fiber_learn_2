@@ -3,6 +3,7 @@ package service
 import (
 	"time"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 
@@ -15,6 +16,7 @@ import (
 
 func SigninService(c *fiber.Ctx) contract.Response {
 	var userInput contract.SigninInput
+	validate := validator.New()
 
 	err := c.BodyParser(&userInput)
 	if err != nil {
@@ -22,6 +24,15 @@ func SigninService(c *fiber.Ctx) contract.Response {
 			Code:    400,
 			Status:  false,
 			Message: "Invalid user input!, please try again.",
+			Result:  contract.Results{},
+		}
+	}
+
+	if errValidate := validate.Struct(userInput); errValidate != nil {
+		return contract.Response{
+			Code:    400,
+			Status:  false,
+			Message: errValidate.Error(),
 			Result:  contract.Results{},
 		}
 	}

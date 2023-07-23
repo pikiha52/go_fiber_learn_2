@@ -1,10 +1,5 @@
 package contract
 
-type SigninInput struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
 type Response struct {
 	Code    int     `json:"code"`
 	Status  bool    `json:"status"`
