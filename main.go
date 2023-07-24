@@ -16,6 +16,8 @@ func main() {
 
 	rabbit.ConnectRabbit()
 
+	// rabbit.ReceiveQueue()
+
 	router.SetupRoutes(app)
 
 	app.Use(func(c *fiber.Ctx) error {
